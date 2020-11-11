@@ -1,11 +1,9 @@
-const { response } = require("express");
-
 const indexedDB = 
-window.indexedDB ||
-window.mozIndexedDB ||
-window.webkitIndexedDB ||
-window.msIndexedDB ||
-window.shimIndexedDB;
+    window.indexedDB ||
+    window.mozIndexedDB ||
+    window.webkitIndexedDB ||
+    window.msIndexedDB ||
+    window.shimIndexedDB;
 
 let db;
 const request = indexedDB.open("budget", 1);
@@ -27,14 +25,14 @@ request.onerror = function(event) {
 };
 
 function saveRecord(record) {
-    const transaction = db.transation(["pending"], "readwrite");
+    const transaction = db.transaction(["pending"], "readwrite");
     const store = transaction.objectStore("pending");
 
     store.add(record);
 }
 
 function checkDatabase(){
-    const transaction = db.transation(["pending"], "readwrite");
+    const transaction = db.transaction(["pending"], "readwrite");
     const store = transaction.objectStore("pending");
     const getAll = store.getAll();
 
@@ -53,10 +51,12 @@ function checkDatabase(){
                 return response.json();
             })
             .then(() => {
-                const transaction = db.transation(["pending"], "readwrite");
+                const transaction = db.transaction(["pending"], "readwrite");
                 const store = transaction.objectStore("pending");
                 store.clear();
             });
             }
         };
 }
+
+window.addEventListener("online", checkDatabase);
