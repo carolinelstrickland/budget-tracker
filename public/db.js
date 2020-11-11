@@ -15,7 +15,7 @@ request.onupgradeneeded = ({ target }) => {
 
 request.onsuccess = ({ target }) => {
     db = target.result;
-    if (navigator.online) {
+    if (navigator.onLine) {
         checkDatabase();
     }
 };
